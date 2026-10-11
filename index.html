@@ -272,8 +272,8 @@
   welcomeBtn.addEventListener("click", () => {
     sfx.chime();
     body.classList.add("welcomed");
+    showBouquet();                                // bouquet is already there as the pop-up fades
     setTimeout(() => { welcome.hidden = true; }, 700);
-    setTimeout(showBouquet, 500);                 // bouquet first, then the envelope
   });
 
   /* ===== 3D BOUQUET (pure CSS 3D, built here) ===== */
@@ -296,14 +296,24 @@
       const p = el("bq-paper", {
         width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h / 2 + "px",
         clipPath: `polygon(0 ${extra / h * 100 * .55}%, 50% 0, 100% ${extra / h * 100 * .55}%, ${50 + tipW}% 100%, ${50 - tipW}% 100%)`,
-        background: i % 2
+        background: "linear-gradient(180deg,transparent 35%,rgba(150,30,70,.22) 80%,rgba(120,20,55,.42)), " + (i % 2
           ? "linear-gradient(90deg,#ffd6e3,#fff2f6 45%,#ffd0de)"
-          : "linear-gradient(90deg,#f58fb0,#ffb3c9 50%,#f283a8)",
+          : "linear-gradient(90deg,#f58fb0,#ffb3c9 50%,#f283a8)"),
         transform: `translate3d(0,${H / 2 - extra / 2}px,0) rotateY(${i * step}deg) translateZ(${(RIM + TIP) / 2 + 3}px) rotateX(${-slant}rad)`
       });
       bq.appendChild(p);
     }
     bq.appendChild(el("bq-fill", { width: RIM * 2 + "px", height: RIM * 2 + "px", left: -RIM + "px", top: -RIM + "px", transform: "translate3d(0,6px,0) rotateX(90deg)" }));
+    // greenery dome: a closed mound from the rim up under the flowers, so nothing shows through the gaps
+    const DB = RIM - 4, DT = 34, DH = 80, DM = 14;   // dome base radius, top radius, height, panels
+    const dSlant = Math.atan((DB - DT) / DH), DL = Math.hypot(DH, DB - DT);
+    const dWb = 2 * DB * Math.tan(Math.PI / DM) + 4, dWt = 2 * DT * Math.tan(Math.PI / DM) + 4;
+    for (let i = 0; i < DM; i++) {
+      bq.appendChild(el("bq-dome", { width: dWb + "px", height: DL + "px", left: -dWb / 2 + "px", top: -DL / 2 + "px",
+        clipPath: `polygon(${50 - dWt / dWb * 50}% 0, ${50 + dWt / dWb * 50}% 0, 100% 100%, 0 100%)`,
+        transform: `translate3d(0,${-DH / 2 + 4}px,0) rotateY(${i * 360 / DM}deg) translateZ(${(DB + DT) / 2}px) rotateX(${dSlant}rad)` }));
+    }
+    bq.appendChild(el("bq-fill", { width: DT * 2 + 6 + "px", height: DT * 2 + 6 + "px", left: -DT - 3 + "px", top: -DT - 3 + "px", transform: `translate3d(0,${-DH + 4}px,0) rotateX(90deg)` }));
 
     // leaves poking out of the paper
     for (let i = 0; i < 9; i++) {
@@ -360,16 +370,33 @@
 
     // satin bow on the front of the wrap
     const yb = 150, rb = RIM - (RIM - TIP) * yb / H;
-    const bow = el("bq-bow", { transform: `translate3d(0,${yb}px,0) translateZ(${rb + 4}px) rotateX(${-slant}rad)` });
-    bow.innerHTML = `<svg viewBox="0 0 110 80" width="110" height="80" aria-hidden="true">
+    const BN = 16;                                 // satin band wrapped all the way round
+    for (let i = 0; i < BN; i++) {
+      const bw = 2 * (rb + 1) * Math.tan(Math.PI / BN) + 2;
+      bq.appendChild(el("bq-band", { width: bw + "px", height: "14px", left: -bw / 2 + "px", top: "-7px",
+        transform: `translate3d(0,${yb}px,0) rotateY(${i * 360 / BN}deg) translateZ(${rb + 1}px) rotateX(${-slant}rad)` }));
+    }
+    const bow = el("bq-bow", { transform: `translate3d(0,${yb}px,0) translateZ(${rb + 3}px) rotateX(${-slant * .6}rad)` });
+    const bowSvg = `<svg viewBox="0 0 110 80" width="110" height="80" aria-hidden="true">
       <defs><linearGradient id="rib" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset="1" stop-color="#c2395f"/></linearGradient></defs>
       <path d="M50 34 C30 8 6 10 8 28 C10 44 34 44 50 38Z" fill="url(#rib)"/>
       <path d="M60 34 C80 8 104 10 102 28 C100 44 76 44 60 38Z" fill="url(#rib)"/>
       <path d="M50 40 L34 76 L44 72 L48 78 L54 42Z M60 40 L76 76 L66 72 L62 78 L56 42Z" fill="#d94673"/>
       <rect x="47" y="28" width="16" height="16" rx="6" fill="#e8456f"/>
       <path d="M18 24 C24 18 34 20 42 30" stroke="#ffb3c9" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M92 24 C86 18 76 20 68 30" stroke="#ffb3c9" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
     </svg>`;
+    for (let k = 0; k < 7; k++) {                  // stacked layers give the bow real thickness
+      const layer = el("bq-bow-layer", { transform: `translateZ(${k * 1.4}px)`, filter: k < 6 ? `brightness(${.62 + k * .05})` : "none" });
+      layer.innerHTML = bowSvg; bow.appendChild(layer);
+    }
     bq.appendChild(bow);
+    // stems poking out of the bottom of the wrap
+    [[-7, -6, 0], [5, 4, 30], [0, 0, 60], [-3, 9, 100], [8, -3, 140]].forEach(([x, z, a], i) => {
+      const st = el("bq-stem", { transform: `translate3d(${x}px,${H - 8}px,${z}px) rotateZ(${(i - 2) * 4}deg) rotateY(${a}deg)` });
+      st.appendChild(el("bq-stem-face")); st.appendChild(el("bq-stem-face", { transform: "rotateY(90deg)" }));
+      bq.appendChild(st);
+    });
     bqView.appendChild(el("bq-shadow"));
   }
   function shade(hex, pct) {                      // lighten (+) or darken (−) a hex colour
