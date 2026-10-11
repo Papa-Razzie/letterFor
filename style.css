@@ -231,11 +231,10 @@ body.welcomed .welcome-card{transform:scale(.88) translateY(24px)}
 /* ===== 3D bouquet (shown after the welcome pop-up, before the envelope) ===== */
 @property --bloom{syntax:'<number>';inherits:true;initial-value:1}
 .bouquet{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:.6rem;padding:1rem 1.2rem 1.6rem;overflow:hidden;opacity:0;transition:opacity .8s ease;
+  gap:.6rem;padding:1rem 1.2rem 1.6rem;overflow:hidden;transition:opacity .8s ease;
   background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.55),transparent 60%),rgba(255,227,238,.88);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .bouquet[hidden]{display:none}
-body.bouquet-on .bouquet{opacity:1}
 body.bouquet-done .bouquet{opacity:0;pointer-events:none}
 .bq-view{position:relative;width:340px;height:400px;flex:none;perspective:1100px;cursor:grab;touch-action:none}
 .bq-view:active{cursor:grabbing}
@@ -267,3 +266,15 @@ body.bouquet-on .bq-hint{opacity:.85}
 .bq-shadow{position:absolute;left:50%;top:372px;width:200px;height:26px;margin-left:-100px;border-radius:50%;
   background:radial-gradient(rgba(190,70,110,.28),transparent 70%)}
 @media (prefers-reduced-motion:reduce){.bq-head{animation:none}}
+
+/* keep the envelope hidden until the bouquet is done, so it never peeks out early */
+body:not(.bouquet-done) .stage{visibility:hidden}
+.bq-dome{position:absolute;backface-visibility:visible;
+  background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.08),transparent 60%),linear-gradient(180deg,#2f6e3f,#3d8c4f 55%,#2a6139)}
+.bq-band{position:absolute;backface-visibility:visible;background:linear-gradient(180deg,#ff6f97,#d94673 55%,#b8325b)}
+.bq-bow-layer{position:absolute;inset:0}
+.bq-bow-layer svg{display:block}
+.bq-bow{backface-visibility:visible}
+.bq-stem{position:absolute;width:0;height:0}
+.bq-stem-face{position:absolute;width:6px;height:46px;left:-3px;top:0;border-radius:3px;backface-visibility:visible;
+  background:linear-gradient(90deg,#2f6e3f,#5aa86a 45%,#2f6e3f)}
