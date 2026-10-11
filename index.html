@@ -17,6 +17,16 @@
 <audio id="bgm" src="music/home.mp3" loop preload="auto"></audio>
 <button class="sound" id="sound" aria-label="Turn sound off" title="Sound on/off">🔊</button>
 
+<!-- Welcome pop-up shown first, before the envelope -->
+<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="welcome-card">
+    <div class="welcome-emoji" aria-hidden="true">💖</div>
+    <h2 id="welcomeTitle">Happy Monthsary, baby!</h2>
+    <p>here's a little something I made for you</p>
+    <button class="welcome-btn" id="welcomeBtn">Open it 💌</button>
+  </div>
+</div>
+
 <main class="stage">
   <div class="headline">
     <span class="badge">11 months ♡ 11th monthsary</span>
@@ -231,6 +241,19 @@
   }
   addEventListener("pointerdown", unlockAudio, { once: true });
   addEventListener("keydown", unlockAudio, { once: true });
+
+  // welcome pop-up: shows first, the envelope waits behind it until she taps "Open it"
+  const welcome = document.getElementById("welcome");
+  const welcomeBtn = document.getElementById("welcomeBtn");
+  const stageEl = document.querySelector(".stage");
+  stageEl.inert = true;
+  welcomeBtn.focus({ preventScroll: true });
+  welcomeBtn.addEventListener("click", () => {
+    sfx.chime();
+    body.classList.add("welcomed");
+    stageEl.inert = false;
+    setTimeout(() => { welcome.hidden = true; }, 700);
+  });
 
   // floating hearts & sparkles
   const floaters = document.getElementById("floaters");
