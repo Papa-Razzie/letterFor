@@ -286,7 +286,7 @@
   const el = (cls, css) => { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, css || {}); return d; };
 
   function buildBouquet() {
-    const RIM = 112, TIP = 8, H = 215;           // cone: rim radius, tip radius, height (px)
+    const RIM = 104, TIP = 8, H = 160;           // cone: rim radius, tip radius, height (px)
     const slant = Math.atan((RIM - TIP) / H), L = Math.hypot(H, RIM - TIP);
     // wrapping paper: pleated panels around a cone, pointed tops, two alternating colours
     const N = 11, step = 360 / N;
@@ -369,7 +369,7 @@
     }
 
     // satin bow on the front of the wrap
-    const yb = 150, rb = RIM - (RIM - TIP) * yb / H;
+    const yb = H * .68, rb = RIM - (RIM - TIP) * yb / H;
     const BN = 16;                                 // satin band wrapped all the way round
     for (let i = 0; i < BN; i++) {
       const bw = 2 * (rb + 1) * Math.tan(Math.PI / BN) + 2;
