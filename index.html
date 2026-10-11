@@ -31,6 +31,18 @@
   </div>
 </div>
 
+<!-- Bouquet: shown after the welcome pop-up, before the envelope -->
+<div class="bouquet" id="bouquet" role="dialog" aria-modal="true" aria-labelledby="bouquetMsg" hidden>
+  <div class="bq-view" id="bqView" aria-label="A 3D bouquet of flowers for you. Drag to spin it.">
+    <div class="bq-fit" id="bqFit">
+      <div class="bq" id="bq"></div>
+    </div>
+  </div>
+  <p class="bq-hint" aria-hidden="true">drag to spin it ♡</p>
+  <p class="bq-msg" id="bouquetMsg">Because we aren't able to celebrate today, and I won't be able to see you face to face… here's your bouquet, as always ♡</p>
+  <button class="welcome-btn bq-btn" id="bouquetBtn">Now, your letter 💌</button>
+</div>
+
 <main class="stage">
   <div class="headline">
     <span class="badge">11 months with you ♡ </span>
@@ -260,8 +272,153 @@
   welcomeBtn.addEventListener("click", () => {
     sfx.chime();
     body.classList.add("welcomed");
-    stageEl.inert = false;
     setTimeout(() => { welcome.hidden = true; }, 700);
+    setTimeout(showBouquet, 500);                 // bouquet first, then the envelope
+  });
+
+  /* ===== 3D BOUQUET (pure CSS 3D, built here) ===== */
+  const bouquetEl = document.getElementById("bouquet");
+  const bq = document.getElementById("bq");
+  const bqView = document.getElementById("bqView");
+  const bqFit = document.getElementById("bqFit");
+  const bqMsg = document.getElementById("bouquetMsg");
+  const bouquetBtn = document.getElementById("bouquetBtn");
+  const el = (cls, css) => { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, css || {}); return d; };
+
+  function buildBouquet() {
+    const RIM = 112, TIP = 8, H = 215;           // cone: rim radius, tip radius, height (px)
+    const slant = Math.atan((RIM - TIP) / H), L = Math.hypot(H, RIM - TIP);
+    // wrapping paper: pleated panels around a cone, pointed tops, two alternating colours
+    const N = 11, step = 360 / N;
+    for (let i = 0; i < N; i++) {
+      const w = 2 * (RIM + 6) * Math.tan(Math.PI / N) + 10, extra = 34 + (i % 3) * 14, h = L + extra;
+      const tipW = (2 * TIP * Math.tan(Math.PI / N)) / w * 50;
+      const p = el("bq-paper", {
+        width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h / 2 + "px",
+        clipPath: `polygon(0 ${extra / h * 100 * .55}%, 50% 0, 100% ${extra / h * 100 * .55}%, ${50 + tipW}% 100%, ${50 - tipW}% 100%)`,
+        background: i % 2
+          ? "linear-gradient(90deg,#ffd6e3,#fff2f6 45%,#ffd0de)"
+          : "linear-gradient(90deg,#f58fb0,#ffb3c9 50%,#f283a8)",
+        transform: `translate3d(0,${H / 2 - extra / 2}px,0) rotateY(${i * step}deg) translateZ(${(RIM + TIP) / 2 + 3}px) rotateX(${-slant}rad)`
+      });
+      bq.appendChild(p);
+    }
+    bq.appendChild(el("bq-fill", { width: RIM * 2 + "px", height: RIM * 2 + "px", left: -RIM + "px", top: -RIM + "px", transform: "translate3d(0,6px,0) rotateX(90deg)" }));
+
+    // leaves poking out of the paper
+    for (let i = 0; i < 9; i++) {
+      const lf = el("bq-leaf", { width: "26px", height: "62px", left: "-13px", top: "-62px",
+        transform: `rotateY(${i * 40 + 12}deg) translateZ(${RIM - 22}px) rotateX(${-58 - (i % 2) * 10}deg)` });
+      bq.appendChild(lf);
+    }
+
+    // flowers: [type, colour, ring radius, angle, height, outward tilt, size]
+    const PINK = ["#e8456f", "#ff7aa2", "#ffb3c9", "#d92e5c", "#ff94b4"];
+    const flowers = [["rose", "#e8456f", 0, 0, -66, 0, 1.45]];
+    for (let i = 0; i < 6; i++) flowers.push([i % 3 === 1 ? "daisy" : "rose", PINK[(i + 1) % 5], 52, i * 60 + 20, -46, 26, 1.15]);
+    for (let i = 0; i < 9; i++) flowers.push([i % 3 === 0 ? "daisy" : "rose", PINK[(i + 3) % 5], 92, i * 40, -14, 50, 1.02]);
+
+    flowers.forEach(([type, col, rad, az, y, tilt, s], n) => {
+      const head = el("bq-head", { animationDelay: (0.35 + n * 0.11) + "s",
+        transform: `translate3d(0,${y}px,0) rotateY(${az}deg) translateZ(${rad}px) rotateX(${-tilt}deg) scale(calc(${s} * var(--bloom)))` });
+      if (type === "rose") {
+        // rings of petals from the tight centre to the open outside
+        const rings = [[3, 3, 14, 18, 8], [5, 7, 20, 24, 24], [5, 11, 26, 30, 44], [6, 15, 32, 34, 66]];
+        rings.forEach(([count, r, w, h, open], k) => {
+          for (let j = 0; j < count; j++) {
+            const pt = el("petal", { width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h + "px",
+              borderRadius: "50% 50% 46% 46% / 62% 62% 38% 38%",
+              background: `radial-gradient(ellipse at 50% 20%, ${shade(col, 18 - k * 4)}, ${col} 55%, ${shade(col, -28)})`,
+              transform: `rotateY(${j * 360 / count + k * 31}deg) translateZ(${r}px) rotateX(calc(${-open}deg * var(--bloom)))` });
+            head.appendChild(pt);
+          }
+        });
+        head.appendChild(el("bq-disc", { width: "14px", height: "14px", left: "-7px", top: "-7px",
+          background: `radial-gradient(${shade(col, -35)}, ${col})`, transform: "translateY(-6px) rotateX(90deg)" }));
+      } else {
+        for (let j = 0; j < 13; j++) {
+          head.appendChild(el("petal", { width: "10px", height: "32px", left: "-5px", top: "-32px",
+            borderRadius: "50% 50% 40% 40% / 70% 70% 30% 30%",
+            background: "linear-gradient(#fff, #fff6f9 70%, #ffd9e5)",
+            transform: `rotateY(${j * 360 / 13}deg) translateZ(6px) rotateX(calc(-80deg * var(--bloom)))` }));
+        }
+        head.appendChild(el("bq-disc", { width: "18px", height: "18px", left: "-9px", top: "-9px",
+          background: "radial-gradient(circle at 40% 35%, #ffe680, #f5b800 70%, #d99a00)", transform: "translateY(-2px) rotateX(90deg)" }));
+      }
+      bq.appendChild(head);
+    });
+
+    // baby's breath: tiny white blooms (two crossed discs so they never go flat)
+    for (let i = 0; i < 34; i++) {
+      const a = Math.random() * 360, r = 30 + Math.random() * 78, y = -30 - Math.random() * 45 + r * .35;
+      const g = el("bq-head", { animationDelay: (1.6 + Math.random()) + "s",
+        transform: `translate3d(0,${y}px,0) rotateY(${a}deg) translateZ(${r}px) scale(var(--bloom))` });
+      g.appendChild(el("bq-dot")); g.appendChild(el("bq-dot", { transform: "rotateY(90deg)" }));
+      bq.appendChild(g);
+    }
+
+    // satin bow on the front of the wrap
+    const yb = 150, rb = RIM - (RIM - TIP) * yb / H;
+    const bow = el("bq-bow", { transform: `translate3d(0,${yb}px,0) translateZ(${rb + 4}px) rotateX(${-slant}rad)` });
+    bow.innerHTML = `<svg viewBox="0 0 110 80" width="110" height="80" aria-hidden="true">
+      <defs><linearGradient id="rib" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset="1" stop-color="#c2395f"/></linearGradient></defs>
+      <path d="M50 34 C30 8 6 10 8 28 C10 44 34 44 50 38Z" fill="url(#rib)"/>
+      <path d="M60 34 C80 8 104 10 102 28 C100 44 76 44 60 38Z" fill="url(#rib)"/>
+      <path d="M50 40 L34 76 L44 72 L48 78 L54 42Z M60 40 L76 76 L66 72 L62 78 L56 42Z" fill="#d94673"/>
+      <rect x="47" y="28" width="16" height="16" rx="6" fill="#e8456f"/>
+      <path d="M18 24 C24 18 34 20 42 30" stroke="#ffb3c9" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+    </svg>`;
+    bq.appendChild(bow);
+    bqView.appendChild(el("bq-shadow"));
+  }
+  function shade(hex, pct) {                      // lighten (+) or darken (−) a hex colour
+    const n = parseInt(hex.slice(1), 16), f = pct / 100;
+    const ch = s => { const c = (n >> s) & 255; return Math.round(f > 0 ? c + (255 - c) * f : c * (1 + f)); };
+    return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
+  }
+
+  // spin: gentle sway on its own, drag to turn it around
+  let spin = 0, dragging = false, lastX = 0, vel = 0, t0 = 0, bqRaf = 0;
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function bqFrame(t) {
+    if (!t0) t0 = t;
+    if (!dragging) { spin += vel; vel *= 0.94; }
+    const sway = reduceMotion ? 0 : Math.sin((t - t0) / 1400) * 16;
+    bq.style.transform = `rotateX(-22deg) rotateY(${spin + sway}deg)`;
+    bqRaf = requestAnimationFrame(bqFrame);
+  }
+  bqView.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; vel = 0; bqView.setPointerCapture(e.pointerId); });
+  bqView.addEventListener("pointermove", e => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; spin += dx * .6; vel = dx * .6; });
+  const endDrag = () => { dragging = false; };
+  bqView.addEventListener("pointerup", endDrag);
+  bqView.addEventListener("pointercancel", endDrag);
+
+  function fitBouquet() {                         // shrink the bouquet on short / narrow screens
+    const k = Math.min(1, (innerWidth - 24) / 340, (innerHeight * .56) / 400);
+    bqFit.style.transform = `scale(${k})`;
+    bqView.style.width = 340 * k + "px"; bqView.style.height = 400 * k + "px";
+    bqFit.style.width = "340px"; bqFit.style.height = "400px";
+  }
+  addEventListener("resize", fitBouquet);
+
+  // message appears word by word
+  bqMsg.innerHTML = bqMsg.textContent.split(" ").map(w => `<span class="w">${w}</span>`).join(" ");
+
+  function showBouquet() {
+    buildBouquet(); fitBouquet();
+    bouquetEl.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => body.classList.add("bouquet-on")));
+    bqRaf = requestAnimationFrame(bqFrame);
+    [0, 1, 2, 3, 4].forEach(i => setTimeout(() => sfx.pop(), 500 + i * 260));
+    const words = bqMsg.querySelectorAll(".w");
+    words.forEach((w, i) => setTimeout(() => w.classList.add("in"), 2200 + i * 110));
+    setTimeout(() => { bouquetBtn.classList.add("in"); bouquetBtn.focus({ preventScroll: true }); }, 2400 + words.length * 110 + 300);
+  }
+  bouquetBtn.addEventListener("click", () => {
+    sfx.chime();
+    body.classList.add("bouquet-done");
+    stageEl.inert = false;
+    setTimeout(() => { bouquetEl.hidden = true; cancelAnimationFrame(bqRaf); }, 850);
   });
 
   // floating hearts & sparkles
