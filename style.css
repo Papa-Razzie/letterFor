@@ -189,3 +189,26 @@ body.reading .paper{transform:translateY(0)}
   -webkit-tap-highlight-color:transparent}
 .sound:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pink-l)}
 .sound:focus-visible{outline:3px solid var(--pink-d);outline-offset:3px}
+
+/* welcome pop-up (shown before the envelope) */
+.welcome{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:1.2rem;
+  background:rgba(255,208,226,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transition:opacity .6s ease}
+.welcome[hidden]{display:none}
+body.welcomed .welcome{opacity:0;pointer-events:none}
+.welcome-card{width:min(92vw,380px);text-align:center;background:#fff;border-radius:28px;padding:2rem 1.5rem 1.7rem;
+  border:3px dashed var(--pink);box-shadow:0 10px 0 var(--pink-l),0 24px 50px rgba(190,70,110,.35);
+  animation:welcomePop .8s cubic-bezier(.34,1.56,.64,1) both;transition:transform .6s ease}
+body.welcomed .welcome-card{transform:scale(.85) translateY(20px)}
+@keyframes welcomePop{0%{opacity:0;transform:scale(.6) translateY(30px)}100%{opacity:1;transform:none}}
+.welcome-emoji{font-size:3rem;animation:beat 1.4s ease-in-out infinite}
+.welcome-card h2{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.2rem,9vw,2.8rem);line-height:1.1;color:var(--berry);margin:.3rem 0 .5rem}
+.welcome-card p{font-family:'Caveat',cursive;font-size:1.6rem;line-height:1.2;color:var(--muted);margin-bottom:1.3rem;
+  animation:welcomeFade 1s ease .5s both}
+@keyframes welcomeFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.welcome-btn{font-family:'Fredoka',sans-serif;font-weight:600;font-size:1.05rem;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,#ff8fb1,#e0517f);border:0;border-radius:999px;padding:.8rem 1.8rem;
+  box-shadow:0 5px 0 #c2395f;animation:welcomeFade 1s ease 1s both;-webkit-tap-highlight-color:transparent}
+.welcome-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c2395f}
+.welcome-btn:focus-visible{outline:3px solid var(--pink-d);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){.welcome-emoji{animation:none}}
