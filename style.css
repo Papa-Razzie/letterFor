@@ -85,6 +85,8 @@ body{
 .flap .back-face{
   background:radial-gradient(#fff 2px,transparent 3px) 0 0/16px 16px,#ffd3e2;
   transform:rotateX(180deg);
+  /* this face is itself flipped, so mirror its triangle: base stays on the hinge, tip points up when open */
+  clip-path:polygon(0 100%,100% 100%,50% 0);border-radius:0 0 16px 16px;
 }
 .seal{
   position:absolute;left:50%;top:56%;z-index:5;width:17%;aspect-ratio:1;border-radius:50%;
