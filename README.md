@@ -6,10 +6,10 @@ I made something for our 11th monthsary. It's a little preview of something bigg
 
 ## How to open it
 
-1. **Visit the website:** 👉 [PASTE YOUR GITHUB PAGES LINK HERE]
-2. **Tap the envelope** and watch it open. ✨
-3. **Read the whole letter**, all the way down to the bottom. Take your time. Scroll through the photos, too. 📸
-4. **Come back on November 12.** That's our anniversary, and something special will be waiting for you. 🎀
+1. **Visit the website:** 👉 github link
+3. **Tap the envelope** and watch it open. ✨
+4. **Read the whole letter**, all the way down to the bottom. Take your time. Scroll through the photos, too. 📸
+5. **Come back on November 12.** That's our anniversary, and something special will be waiting for you. 🎀
 
 ## Tips
 
