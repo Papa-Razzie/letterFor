@@ -227,3 +227,43 @@ body.welcomed .welcome-card{transform:scale(.88) translateY(24px)}
 .welcome-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c2395f}
 .welcome-btn:focus-visible{outline:3px solid var(--pink-d);outline-offset:4px}
 @media (prefers-reduced-motion:reduce){.welcome-emoji,.welcome-tilt{animation:none}}
+
+/* ===== 3D bouquet (shown after the welcome pop-up, before the envelope) ===== */
+@property --bloom{syntax:'<number>';inherits:true;initial-value:1}
+.bouquet{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;padding:1rem 1.2rem 1.6rem;overflow:hidden;opacity:0;transition:opacity .8s ease;
+  background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.55),transparent 60%),rgba(255,227,238,.88);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.bouquet[hidden]{display:none}
+body.bouquet-on .bouquet{opacity:1}
+body.bouquet-done .bouquet{opacity:0;pointer-events:none}
+.bq-view{position:relative;width:340px;height:400px;flex:none;perspective:1100px;cursor:grab;touch-action:none}
+.bq-view:active{cursor:grabbing}
+.bq-fit{position:absolute;inset:0;transform-origin:50% 0}
+.bq{position:absolute;left:50%;top:150px;width:0;height:0;transform-style:preserve-3d}
+.bq *{transform-style:preserve-3d}
+.bq-hint{font-size:.85rem;color:var(--muted);letter-spacing:.04em;opacity:0;transition:opacity 1s ease 2.6s}
+body.bouquet-on .bq-hint{opacity:.85}
+.bq-msg{max-width:30rem;text-align:center;font-family:'Caveat',cursive;font-weight:700;
+  font-size:clamp(1.35rem,5.2vw,1.9rem);line-height:1.2;color:var(--pink-d)}
+.bq-msg .w{display:inline-block;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+.bq-msg .w.in{opacity:1;transform:none}
+.bq-btn{margin-top:.3rem;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease;pointer-events:none;animation:none}
+.bq-btn.in{opacity:1;transform:none;pointer-events:auto}
+
+/* wrapping paper cone */
+.bq-paper{position:absolute;backface-visibility:visible}
+/* greenery disc closing the top of the cone */
+.bq-fill{position:absolute;border-radius:50%;background:radial-gradient(circle,#3f8a52,#2d6b3e 70%,#24573a)}
+/* flower heads, leaves, baby's breath */
+.bq-head{position:absolute;width:0;height:0;animation:bloom 1.8s cubic-bezier(.3,1.3,.5,1) both}
+@keyframes bloom{from{--bloom:0}to{--bloom:1}}
+.petal{position:absolute;transform-origin:50% 100%;backface-visibility:visible}
+.bq-disc{position:absolute;border-radius:50%}
+.bq-leaf{position:absolute;transform-origin:50% 100%;border-radius:0 100% 0 100%;
+  background:linear-gradient(135deg,#7fc48a,#3d8c4f 60%,#2f6e3f)}
+.bq-dot{position:absolute;width:7px;height:7px;margin:-3.5px;border-radius:50%;background:#fff;box-shadow:0 0 3px #fff8}
+.bq-bow{position:absolute;width:110px;height:80px;left:-55px;top:-40px;backface-visibility:hidden}
+.bq-shadow{position:absolute;left:50%;top:372px;width:200px;height:26px;margin-left:-100px;border-radius:50%;
+  background:radial-gradient(rgba(190,70,110,.28),transparent 70%)}
+@media (prefers-reduced-motion:reduce){.bq-head{animation:none}}
