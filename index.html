@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy 11th Monthsary, Princess Baby</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#ffe3ee; --bg2:#ffd0e2; --pink:#ff8fb1; --pink-d:#e0517f; --pink-l:#ffc7d9;
+    --env:#ffa3c0; --env-d:#ff8fb1; --cream:#fffaf3; --ink:#6b3347; --muted:#a8707f;
+    --berry:#c2395f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Fredoka',system-ui,sans-serif;color:var(--ink);overflow:hidden;
+    background:
+      radial-gradient(circle at 20% 15%,rgba(255,255,255,.7) 0 80px,transparent 81px),
+      radial-gradient(circle at 85% 80%,rgba(255,255,255,.5) 0 110px,transparent 111px),
+      radial-gradient(#fff6 2px,transparent 3px) 0 0/26px 26px,
+      linear-gradient(160deg,var(--bg1),var(--bg2));
+  }
+
+  /* floating hearts / sparkles */
+  .floaters{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+  .floaters span{position:absolute;bottom:-50px;opacity:0;animation:floatUp linear infinite}
+  @keyframes floatUp{
+    0%{transform:translateY(0) rotate(-10deg);opacity:0}
+    10%{opacity:.75}
+    100%{transform:translateY(-115vh) rotate(25deg);opacity:0}
+  }
+
+  /* intro layout */
+  .stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;padding:1rem;
+    transition:opacity .6s ease}
+  .headline{text-align:center;transition:opacity .6s}
+  .badge{display:inline-block;background:#fff;color:var(--pink-d);font-weight:600;font-size:.8rem;letter-spacing:.12em;
+    padding:.35rem .9rem;border-radius:999px;box-shadow:0 4px 0 var(--pink-l);margin-bottom:.8rem;text-transform:uppercase}
+  .headline h1{font-weight:600;font-size:clamp(1.7rem,6vw,2.7rem);line-height:1.15;color:var(--berry)}
+  .headline h1 em{font-style:normal;display:block;font-family:'Caveat',cursive;font-size:1.25em;color:var(--pink-d);font-weight:700}
+  .hint{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--pink-d);animation:pulse 2s ease-in-out infinite;transition:opacity .4s}
+  @keyframes pulse{50%{opacity:.4;transform:translateY(3px)}}
+
+  /* 3D scene */
+  .scene{perspective:1100px;position:relative}
+  .tilt{transform-style:preserve-3d;transition:transform .25s ease-out;animation:bob 3.6s ease-in-out infinite}
+  @keyframes bob{50%{translate:0 -10px}}
+  .sparkle{position:absolute;font-size:1.4rem;animation:twinkle 2.4s ease-in-out infinite}
+  .sparkle:nth-of-type(1){left:-14px;top:-8px}
+  .sparkle:nth-of-type(2){right:-10px;top:14%;animation-delay:.8s;font-size:1.1rem}
+  .sparkle:nth-of-type(3){left:6%;bottom:-18px;animation-delay:1.5s;font-size:1.2rem}
+  @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+
+  .envelope{
+    --w:min(80vw,340px);
+    position:relative;width:var(--w);aspect-ratio:4/3;cursor:pointer;outline:none;
+    transition:transform 1s cubic-bezier(.6,0,.3,1),opacity .8s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .envelope:focus-visible .back{outline:3px solid var(--pink-d);outline-offset:6px}
+  .shadow{position:absolute;left:8%;right:8%;bottom:-18px;height:26px;background:rgba(190,70,110,.35);filter:blur(12px);border-radius:50%}
+  .back{position:absolute;inset:0;background:var(--env-d);border-radius:16px}
+
+  .letter{
+    position:absolute;left:7%;right:7%;top:6%;height:88%;z-index:2;border-radius:10px;
+    background:
+      repeating-linear-gradient(transparent 0 25px,rgba(255,143,177,.25) 25px 26px),
+      #fffdf8;
+    transition:transform 1s cubic-bezier(.5,0,.2,1);
+    padding:12px 16px;text-align:center;
+    font-family:'Caveat',cursive;font-weight:700;font-size:clamp(1.1rem,4vw,1.45rem);color:var(--pink-d);
+    box-shadow:0 -3px 10px rgba(190,70,110,.18);
+  }
+  .pocket{position:absolute;inset:0;z-index:3;pointer-events:none}
+  .pocket i{position:absolute;inset:0;border-radius:16px}
+  .pocket .l{background:linear-gradient(100deg,#ffb5cc,#ff9dbb);clip-path:polygon(0 0,53% 54%,0 100%)}
+  .pocket .r{background:linear-gradient(260deg,#ffb5cc,#ff9dbb);clip-path:polygon(100% 0,47% 54%,100% 100%)}
+  .pocket .b{background:linear-gradient(0deg,#ffc2d6,#ffb0c8);clip-path:polygon(0 100%,50% 46%,100% 100%)}
+  .pocket::after{content:"";position:absolute;inset:7px;border:2px dashed rgba(255,255,255,.75);border-radius:11px}
+  .to{position:absolute;left:0;right:0;top:70%;text-align:center;font-family:'Caveat',cursive;font-weight:700;
+    font-size:clamp(1.2rem,4.6vw,1.6rem);color:#fff;text-shadow:0 2px 0 rgba(224,81,127,.5)}
+
+  .flap{
+    position:absolute;left:0;top:0;width:100%;height:56%;z-index:4;
+    transform-origin:50% 0;transform-style:preserve-3d;
+    transform:perspective(900px) rotateX(0deg);
+    transition:transform .9s cubic-bezier(.5,0,.2,1),z-index 0s .45s;
+  }
+  .flap .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    clip-path:polygon(0 0,100% 0,50% 100%);border-radius:16px 16px 0 0}
+  .flap .front{background:linear-gradient(180deg,#ff9dbb,#ff7fa6)}
+  .flap .back-face{
+    background:radial-gradient(#fff 2px,transparent 3px) 0 0/16px 16px,#ffd3e2;
+    transform:rotateX(180deg);
+  }
+  .seal{
+    position:absolute;left:50%;top:56%;z-index:5;width:17%;aspect-ratio:1;border-radius:50%;
+    translate:-50% -50%;
+    background:radial-gradient(circle at 35% 30%,#ff7a9c,#d92e5c);
+    box-shadow:0 4px 0 #b02148,0 8px 14px rgba(120,20,50,.35);
+    display:grid;place-items:center;color:#fff;font-size:clamp(1rem,4vw,1.5rem);
+    animation:beat 1.4s ease-in-out infinite;transition:opacity .3s;
+  }
+  @keyframes beat{0%,100%{scale:1}15%{scale:1.12}30%{scale:1}45%{scale:1.08}}
+
+  /* opening states */
+  body.open .flap{transform:perspective(900px) rotateX(180deg);z-index:1}
+  body.open .seal{opacity:0;animation:none}
+  body.open .hint{opacity:0}
+  body.open .tilt{animation-play-state:paused}
+  body.rise .letter{transform:translateY(-68%)}
+  body.reading .envelope{transform:translateY(60vh) scale(.8);opacity:0}
+  body.reading .headline{opacity:0}
+
+  /* reading overlay */
+  .overlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:flex-end;pointer-events:none;z-index:10}
+  .paper{
+    width:min(94vw,620px);height:93vh;color:var(--ink);
+    border-radius:28px 28px 0 0;overflow-y:auto;overscroll-behavior:contain;
+    transform:translateY(110%);transition:transform 1.3s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 -16px 50px rgba(190,70,110,.4);pointer-events:auto;
+    background:
+      repeating-linear-gradient(transparent 0 35px,rgba(255,143,177,.16) 35px 36px),
+      var(--cream);
+    border-top:8px solid var(--pink);
+  }
+  body.reading .paper{transform:translateY(0)}
+  .paper-inner{padding:1.6rem 1.5rem 4rem;text-align:center}
+  .deco{font-size:1.5rem;letter-spacing:.4em;margin-bottom:.4rem}
+  .paper h2{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(2.2rem,9vw,3rem);color:var(--berry);line-height:1.1}
+  .paper .date{display:inline-block;margin:.6rem 0 1.4rem;background:var(--pink-l);color:var(--pink-d);font-weight:600;
+    font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;padding:.3rem .9rem;border-radius:999px}
+
+  .reveal{opacity:0;transform:translateY(24px) scale(.97);transition:opacity .9s ease,transform .9s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .photos{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px;margin:1.6rem 0}
+  .photo{position:relative;background:#fff;padding:9px 9px 28px;border-radius:6px;box-shadow:0 8px 18px rgba(190,70,110,.22);transform:rotate(var(--r,0deg))}
+  .photo::before{content:"";position:absolute;top:-10px;left:50%;width:62px;height:20px;margin-left:-31px;
+    background:repeating-linear-gradient(45deg,rgba(255,143,177,.85) 0 6px,rgba(255,199,217,.85) 6px 12px);transform:rotate(-4deg);border-radius:2px}
+  .photo:nth-child(1){--r:-2.5deg}.photo:nth-child(2){--r:2deg}
+  .photo:nth-child(3){--r:-1deg}.photo:nth-child(4){--r:2deg}.photo:nth-child(5){--r:-2deg}
+  .photo.wide{grid-column:1/-1}
+  .photo .ph,.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#ffe8f0}
+  .photo.wide .ph,.photo.wide img{aspect-ratio:16/10}
+  .ph{display:grid;place-items:center;color:var(--pink-d);font-family:'Caveat',cursive;font-size:1.4rem;border:2px dashed var(--pink-l)}
+  .photo figcaption{font-family:'Caveat',cursive;font-size:1.15rem;color:var(--muted);margin-top:6px}
+
+  .message{text-align:left;font-family:'Caveat',cursive;font-weight:500;font-size:1.5rem;line-height:36px;margin:1.4rem 0}
+  .message p{margin-bottom:36px}
+  .message strong{color:var(--berry);font-weight:700}
+  .message .sub{font-family:'Fredoka',sans-serif;font-weight:600;font-size:1rem;line-height:1.4;color:var(--pink-d);
+    letter-spacing:.04em;margin:1.6rem 0 .8rem;text-align:center}
+
+  .quote{position:relative;margin:2rem 0;padding:1.6rem 1.3rem 1.2rem;background:#fff;border-radius:20px;
+    border:2px dashed var(--pink);box-shadow:0 6px 0 var(--pink-l);transform:rotate(var(--r,0deg));
+    font-family:'Caveat',cursive;font-size:1.45rem;line-height:1.35;color:var(--berry);text-align:center}
+  .quote::before{content:"\201C";position:absolute;top:-22px;left:50%;margin-left:-22px;width:44px;height:44px;border-radius:50%;
+    background:var(--pink);color:#fff;font-family:Georgia,serif;font-size:2.4rem;line-height:56px;box-shadow:0 3px 0 var(--pink-d)}
+  .quote small{display:block;font-family:'Fredoka',sans-serif;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+  .q1{--r:-1.2deg}.q2{--r:1deg}.q3{--r:-.8deg}
+
+  .promises{list-style:none;text-align:left;margin:1rem 0 2rem;background:#fff;border-radius:20px;padding:1.2rem 1.2rem .4rem;
+    box-shadow:0 6px 0 var(--pink-l);font-family:'Caveat',cursive;font-size:1.4rem;line-height:1.4}
+  .promises li{padding-left:2rem;position:relative;margin-bottom:.8rem}
+  .promises li::before{content:"♥";position:absolute;left:.3rem;color:var(--pink-d)}
+
+  .sign{text-align:right;font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--berry);line-height:1.2;margin-top:1rem}
+  .ps{text-align:left;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--muted);margin-top:1rem}
+
+  .teaser{margin-top:2.4rem;padding:1.8rem 1.2rem;border-radius:24px;color:#fff;
+    background:linear-gradient(135deg,#ff8fb1,#e0517f);box-shadow:0 8px 0 #c2395f}
+  .teaser .bell{font-size:2rem;display:block;animation:ring 2s ease-in-out infinite;transform-origin:50% 0}
+  @keyframes ring{0%,60%,100%{rotate:0deg}65%{rotate:-14deg}75%{rotate:12deg}85%{rotate:-8deg}95%{rotate:4deg}}
+  .teaser h3{font-weight:600;font-size:1.3rem;margin:.4rem 0}
+  .teaser p{font-size:.95rem;opacity:.95;line-height:1.5}
+  .teaser .when{display:inline-block;margin:.9rem 0;background:#fff;color:var(--pink-d);font-weight:600;padding:.45rem 1.1rem;border-radius:999px;box-shadow:0 3px 0 #ffc7d9}
+  .count{display:flex;justify-content:center;gap:.8rem;margin-top:.4rem}
+  .count div{min-width:62px;background:rgba(255,255,255,.22);border-radius:14px;padding:.5rem .3rem}
+  .count b{display:block;font-size:1.6rem;font-weight:600}
+  .count span{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase}
+
+  .close{position:sticky;top:10px;float:right;margin:10px 10px 0 0;z-index:3;width:38px;height:38px;border-radius:50%;
+    border:0;background:var(--pink-l);color:var(--pink-d);font-size:1.1rem;cursor:pointer;box-shadow:0 3px 0 var(--pink)}
+  .close:hover{background:var(--pink)}
+  .close:active{transform:translateY(2px);box-shadow:none}
+
+  @media (prefers-reduced-motion:reduce){
+    .tilt,.floaters span,.hint,.sparkle,.seal,.bell{animation:none}
+    *{transition-duration:.01s!important;transition-delay:0s!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters" aria-hidden="true"></div>
+
+<main class="stage">
+  <div class="headline">
+    <span class="badge">11 months ♡ 11th monthsary</span>
+    <h1>Happy 11th Monthsary,<em id="her">Princess Baby</em></h1>
+  </div>
+
+  <div class="scene">
+    <span class="sparkle" aria-hidden="true">✨</span>
+    <span class="sparkle" aria-hidden="true">💖</span>
+    <span class="sparkle" aria-hidden="true">✨</span>
+    <div class="tilt" id="tilt">
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open your letter">
+        <div class="shadow"></div>
+        <div class="back"></div>
+        <div class="letter">To my favorite human ♡</div>
+        <div class="pocket">
+          <i class="l"></i><i class="r"></i><i class="b"></i>
+          <div class="to">for Marielle ♡</div>
+        </div>
+        <div class="flap">
+          <div class="face front"></div>
+          <div class="face back-face"></div>
+        </div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint">tap the envelope 💌</p>
+</main>
+
+<div class="overlay">
+  <article class="paper" id="paper" aria-label="Your letter">
+    <button class="close" id="close" aria-label="Close letter">✕</button>
+    <div class="paper-inner">
+      <div class="deco reveal" aria-hidden="true">🌸💌🌸</div>
+      <h2 class="reveal">My dearest Marielle,</h2>
+      <p class="date reveal">11 months of us</p>
+
+      <div class="photos">
+        <!-- Replace each .ph div with: <img src="images/photo1.jpg" alt="..."> -->
+        <figure class="photo reveal"><div class="ph">Photo 1</div><figcaption>[caption]</figcaption></figure>
+        <figure class="photo reveal"><div class="ph">Photo 2</div><figcaption>[caption]</figcaption></figure>
+        <figure class="photo wide reveal"><div class="ph">Photo 3</div><figcaption>[caption]</figcaption></figure>
+        <figure class="photo reveal"><div class="ph">Photo 4</div><figcaption>[caption]</figcaption></figure>
+        <figure class="photo reveal"><div class="ph">Photo 5</div><figcaption>[caption]</figcaption></figure>
+      </div>
+
+      <div class="message">
+        <p class="reveal"><strong>Happy 11th monthsary, my love!</strong> 🎉 Eleven months. ELEVEN. That means in just one more month I get to say "one year" and be extremely smug about it. I've been dating the most amazing girl for this long and she still hasn't filed a return request, so I'm officially calling that a win.</p>
+
+        <p class="reveal">I tried really hard to think of something original to write, but my brain just can't function when I think about you. It's like a computer stuck on a loading screen, just a little heart spinning in circles. 💻 So instead, I went on a deep dive of the internet's finest bad puns, and I'm sorry in advance, but here is the best of the worst. 😭 Princess Baby, I love you from my head tomatoes. 🍅 I love you a latte. ☕ I dolphinately love you. 🐬 I'd be lion if I said I didn't love you. 🦁 And omelette you finish, but I love you a latke. 🍳</p>
+
+        <p class="reveal">I would tell you a joke about pizza, but it's a little cheesy. 🍕 This might sound cheesy too, but I think you're grate. 🧀 And one more, because I can't stop: is your name Wi-Fi? Because I'm definitely feeling a connection. 📶 (I know. I'm sorry. I'm not sorry. I'll be doing this for the next fifty years, so please start building your tolerance now.)</p>
+
+        <div class="quote q1 reveal">
+          You're my favorite notification, my best distraction, and my safest place, all in one person.
+          <small>~ Razzle, certified corny</small>
+        </div>
+
+        <p class="reveal">You have a way of making the most boring things feel like an adventure. Waiting in line? Adventure. Deciding where to eat for 45 minutes and ending up at the first place we suggested? Epic quest. Sitting quietly next to you doing absolutely nothing? That's honestly my favorite place in the whole world.</p>
+
+        <p class="sub reveal">🥺 okay, serious Razzle for a second 🥺</p>
+
+        <p class="reveal">I know the past few weeks haven't been our best. We've felt distant, things got tense, and some days we weren't even really talking the way we used to. And a lot of that is on me. I haven't been the boyfriend you deserve lately, and I hate that. <strong>I'm so sorry, Princess Baby.</strong> Really and truly.</p>
+
+        <p class="reveal">You never asked me to be perfect. You just asked me to show up, to listen, and to choose us, even on the hard days. So here's what I promise to do better:</p>
+
+        <ul class="promises reveal">
+          <li>Listen first, defend myself later (or never).</li>
+          <li>Put the phone down when you're talking to me.</li>
+          <li>Say the sweet stuff out loud, not just think it.</li>
+          <li>Talk to you when something's bothering me instead of going quiet.</li>
+          <li>Plan real dates and make real time for us.</li>
+          <li>[add your own promise here]</li>
+        </ul>
+
+        <div class="quote q2 reveal">
+          I don't need a perfect love story. I just need the one where it's still you and still us at the end of every messy chapter.
+          <small>~ Razzle, still corny</small>
+        </div>
+
+        <p class="reveal">I'm not going to pretend I've got everything figured out, but I do know one thing for sure: I want to figure it out with you. Every sunny day, every rough patch, every random Tuesday. You make me want to be softer, better, and braver, and I'm going to keep working on it every single day.</p>
+
+        <p class="reveal">Thank you for staying, for being patient with me, and for loving me even when I'm a certified dummy. I love you more than I know how to put into words (and clearly I tried, this letter is very long). 😭</p>
+
+        <div class="quote q3 reveal">
+          Home isn't a place. It's the way my heart goes quiet and happy when you say my name.
+          <small>~ Razzle, the most pogi</small>
+        </div>
+
+        <p class="sign reveal">Forever yours,<br>Razzle ♡</p>
+        <p class="ps reveal">P.S. You're still the cutest. This is not up for debate.<br>P.P.S. Eleven months down, so many more to go. 🥰</p>
+      </div>
+
+      <div class="teaser reveal">
+        <span class="bell" aria-hidden="true">🔔</span>
+        <h3>Don't forget, Marielle!</h3>
+        <p>This is only a little preview. Come back and visit this website on our anniversary. Something special will be waiting for you. 💌</p>
+        <div class="when">📅 November 12</div>
+        <div class="count" id="count" aria-live="off">
+          <div><b id="d">--</b><span>days</span></div>
+          <div><b id="h">--</b><span>hours</span></div>
+          <div><b id="m">--</b><span>min</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script>
+  /* ===== EDIT THESE ===== */
+  const CONFIG = {
+    herName: "Princess Baby",                      // shown in the headline
+    anniversary: "2026-11-12T00:00:00+08:00"  // countdown target (Manila time)
+  };
+  /* ====================== */
+
+  document.getElementById("her").textContent = CONFIG.herName;
+
+  // floating hearts & sparkles
+  const floaters = document.getElementById("floaters");
+  const icons = ["♥","💗","✨","🌸","💖","♡"];
+  for (let i = 0; i < 20; i++) {
+    const s = document.createElement("span");
+    s.textContent = icons[i % icons.length];
+    s.style.left = Math.random() * 100 + "%";
+    s.style.fontSize = 12 + Math.random() * 20 + "px";
+    s.style.color = "#ff8fb1";
+    s.style.animationDuration = 9 + Math.random() * 10 + "s";
+    s.style.animationDelay = Math.random() * 12 + "s";
+    floaters.appendChild(s);
+  }
+
+  // 3D tilt following pointer
+  const tilt = document.getElementById("tilt");
+  const body = document.body;
+  addEventListener("pointermove", e => {
+    if (body.classList.contains("open")) return;
+    const x = (e.clientX / innerWidth - .5) * 2;
+    const y = (e.clientY / innerHeight - .5) * 2;
+    tilt.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`;
+  });
+
+  // open sequence
+  const envelope = document.getElementById("envelope");
+  const paper = document.getElementById("paper");
+  let timers = [];
+  function openLetter() {
+    if (body.classList.contains("open")) return;
+    tilt.style.transform = "rotateX(6deg)";
+    body.classList.add("open");                                            // flap opens
+    timers.push(setTimeout(() => body.classList.add("rise"), 750));        // paper slides up out of the envelope
+    timers.push(setTimeout(() => {
+      body.classList.add("reading");                                       // paper glides up full screen
+      observeReveals();
+    }, 1900));
+  }
+  function closeLetter() {
+    if (!body.classList.contains("open")) return;
+    timers.forEach(clearTimeout); timers = [];
+    body.classList.remove("reading");
+    timers.push(setTimeout(() => body.classList.remove("rise"), 500));
+    timers.push(setTimeout(() => body.classList.remove("open"), 1100));
+    paper.scrollTo({ top: 0 });
+    document.querySelectorAll(".reveal").forEach(el => el.classList.remove("in"));
+  }
+  envelope.addEventListener("click", openLetter);
+  envelope.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLetter(); }
+  });
+  document.getElementById("close").addEventListener("click", closeLetter);
+  addEventListener("keydown", e => { if (e.key === "Escape") closeLetter(); });
+
+  // reveal on scroll inside the paper
+  function observeReveals() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { root: paper, threshold: .12 });
+    document.querySelectorAll(".reveal").forEach((el, i) => {
+      el.style.transitionDelay = (i < 3 ? i * 0.25 + 0.9 : 0) + "s";
+      io.observe(el);
+    });
+  }
+
+  // countdown to the anniversary
+  const target = new Date(CONFIG.anniversary).getTime();
+  function tick() {
+    let diff = Math.max(0, target - Date.now());
+    const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+    const h = Math.floor(diff / 36e5);  diff -= h * 36e5;
+    const m = Math.floor(diff / 6e4);
+    document.getElementById("d").textContent = d;
+    document.getElementById("h").textContent = h;
+    document.getElementById("m").textContent = m;
+  }
+  tick(); setInterval(tick, 30000);
+</script>
+</body>
+</html>
