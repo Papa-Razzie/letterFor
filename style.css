@@ -182,3 +182,10 @@ body.reading .paper{transform:translateY(0)}
   .tilt,.floaters span,.hint,.sparkle,.seal,.bell{animation:none}
   *{transition-duration:.01s!important;transition-delay:0s!important}
 }
+
+/* sound on/off button */
+.sound{position:fixed;top:14px;right:14px;z-index:30;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;color:var(--pink-d);font-size:1.2rem;box-shadow:0 4px 0 var(--pink-l),0 6px 14px rgba(190,70,110,.25);
+  -webkit-tap-highlight-color:transparent}
+.sound:active{transform:translateY(2px);box-shadow:0 2px 0 var(--pink-l)}
+.sound:focus-visible{outline:3px solid var(--pink-d);outline-offset:3px}
