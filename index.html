@@ -135,6 +135,103 @@
 
   document.getElementById("her").textContent = CONFIG.herName;
 
+  /* ===== SOUND (sound effects are generated in the browser, no files needed) ===== */
+  const bgm = document.getElementById("bgm");
+  const soundBtn = document.getElementById("sound");
+  const MUSIC_VOLUME = 0.35;                  // 0 to 1
+  let muted = false;
+  try { muted = localStorage.getItem("muted") === "1"; } catch (e) {}
+
+  let ctx = null;
+  function audio() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+    }
+    // iPhone/iPad: let Web Audio play even when the silent switch is on
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+    if (ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function tone(freq, when, dur, vol = 0.12, type = "sine", slideTo) {
+    const c = audio(); if (!c || muted) return;
+    const t = c.currentTime + when;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(c.destination);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function noise(when, dur, vol, f0, f1, type = "bandpass") {
+    const c = audio(); if (!c || muted) return;
+    const t = c.currentTime + when;
+    const buf = c.createBuffer(1, Math.max(1, Math.floor(c.sampleRate * dur)), c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = c.createBufferSource(); src.buffer = buf;
+    const f = c.createBiquadFilter(); f.type = type;
+    f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(f).connect(g).connect(c.destination);
+    src.start(t); src.stop(t + dur + 0.05);
+  }
+  const sfx = {
+    tap()    { tone(520, 0, 0.12, 0.14, "sine", 330); },                         // envelope tap
+    flap()   { noise(0, 0.35, 0.22, 2200, 700); tone(300, 0, 0.1, 0.06, "triangle", 200); },  // flap opens
+    whoosh() { noise(0, 0.7, 0.2, 500, 3200, "lowpass"); },                     // letter slides up
+    chime()  { [784, 988, 1175, 1568].forEach((f, i) => tone(f, i * 0.09, 0.9, 0.09, "sine")); }, // letter ready
+    pop()    { tone(700 + Math.random() * 500, 0, 0.1, 0.07, "sine", 1300); },  // photos/quotes appear
+    close()  { tone(659, 0, 0.18, 0.1); tone(494, 0.12, 0.3, 0.1); noise(0.05, 0.3, 0.12, 1500, 500); }
+  };
+  let lastPop = 0;
+  function popThrottled() { const n = Date.now(); if (n - lastPop > 450) { lastPop = n; sfx.pop(); } }
+
+  // background music: starts on the first tap (browsers block autoplay), fades in
+  bgm.volume = 0;
+  let fadeTimer = null;
+  function fadeTo(target, ms = 1500) {
+    clearInterval(fadeTimer);
+    const start = bgm.volume, steps = 30, dt = ms / steps; let i = 0;
+    fadeTimer = setInterval(() => {
+      i++; bgm.volume = Math.max(0, Math.min(1, start + (target - start) * (i / steps)));
+      if (i >= steps) clearInterval(fadeTimer);
+    }, dt);
+  }
+  function startMusic() {
+    if (muted) return;
+    const p = bgm.play();
+    if (p && p.then) p.then(() => fadeTo(MUSIC_VOLUME)).catch(() => {});
+  }
+  function renderSoundBtn() {
+    soundBtn.textContent = muted ? "🔇" : "🔊";
+    soundBtn.setAttribute("aria-label", muted ? "Turn sound on" : "Turn sound off");
+  }
+  soundBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    muted = !muted;
+    try { localStorage.setItem("muted", muted ? "1" : "0"); } catch (err) {}
+    renderSoundBtn();
+    if (muted) { fadeTo(0, 400); setTimeout(() => bgm.pause(), 450); }
+    else { audio(); startMusic(); sfx.tap(); }
+  });
+  renderSoundBtn();
+  // first tap: wake up the audio system (a silent clip helps iPhones), then start the music
+  const SILENT = "data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==";
+  function unlockAudio() {
+    audio();
+    try { const s = new Audio(SILENT); s.play().catch(() => {}); } catch (e) {}
+    startMusic();
+  }
+  addEventListener("pointerdown", unlockAudio, { once: true });
+  addEventListener("keydown", unlockAudio, { once: true });
+
   // floating hearts & sparkles
   const floaters = document.getElementById("floaters");
   const icons = ["♥","💗","✨","🌸","💖","♡"];
@@ -166,15 +263,18 @@
   function openLetter() {
     if (body.classList.contains("open")) return;
     tilt.style.transform = "rotateX(6deg)";
+    sfx.tap(); setTimeout(() => sfx.flap(), 120);
     body.classList.add("open");                                            // flap opens
-    timers.push(setTimeout(() => body.classList.add("rise"), 750));        // paper slides up out of the envelope
+    timers.push(setTimeout(() => { body.classList.add("rise"); sfx.whoosh(); }, 750));  // paper slides up out of the envelope
     timers.push(setTimeout(() => {
       body.classList.add("reading");                                       // paper glides up full screen
+      sfx.chime();
       observeReveals();
     }, 1900));
   }
   function closeLetter() {
     if (!body.classList.contains("open")) return;
+    sfx.close();
     timers.forEach(clearTimeout); timers = [];
     body.classList.remove("reading");
     timers.push(setTimeout(() => body.classList.remove("rise"), 500));
@@ -192,7 +292,12 @@
   // reveal on scroll inside the paper
   function observeReveals() {
     const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add("in"); io.unobserve(en.target);
+          if (en.target.matches(".photo, .quote, .teaser, .promises")) popThrottled();
+        }
+      });
     }, { root: paper, threshold: .12 });
     document.querySelectorAll(".reveal").forEach((el, i) => {
       el.style.transitionDelay = (i < 3 ? i * 0.25 + 0.9 : 0) + "s";
