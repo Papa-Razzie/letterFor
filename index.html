@@ -19,11 +19,15 @@
 
 <!-- Welcome pop-up shown first, before the envelope -->
 <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-  <div class="welcome-card">
-    <div class="welcome-emoji" aria-hidden="true">💖</div>
-    <h2 id="welcomeTitle">Happy Monthsary, baby!</h2>
-    <p>here's a little something I made for you</p>
-    <button class="welcome-btn" id="welcomeBtn">Open it 💌</button>
+  <div class="welcome-tilt" id="welcomeTilt">
+    <div class="welcome-card">
+      <div class="welcome-emoji" aria-hidden="true">♥</div>
+      <span class="welcome-eyebrow">11 months ♡</span>
+      <h2 id="welcomeTitle">Happy Monthsary,<em>baby!</em></h2>
+      <p>here's a little something I made for you</p>
+      <div class="welcome-music"><span aria-hidden="true">🎧</span><div>Turn on your music (and your volume) if it isn't on already</div></div>
+      <button class="welcome-btn" id="welcomeBtn">Open it 💌</button>
+    </div>
   </div>
 </div>
 
@@ -248,6 +252,11 @@
   const stageEl = document.querySelector(".stage");
   stageEl.inert = true;
   welcomeBtn.focus({ preventScroll: true });
+  const welcomeTilt = document.getElementById("welcomeTilt");
+  welcome.addEventListener("pointermove", e => {
+    const x = (e.clientX / innerWidth - .5) * 2, y = (e.clientY / innerHeight - .5) * 2;
+    welcomeTilt.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 9}deg)`;
+  });
   welcomeBtn.addEventListener("click", () => {
     sfx.chime();
     body.classList.add("welcomed");
