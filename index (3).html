@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy 1st Anniversary, Princess Baby</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="floaters" id="floaters" aria-hidden="true"></div>
+
+<!-- Background music: put your file at music/home.mp3 -->
+<audio id="bgm" src="music/home.mp3" loop preload="auto"></audio>
+<button class="sound" id="sound" aria-label="Turn sound off" title="Sound on/off">🔊</button>
+
+<!-- Welcome pop-up shown first, before the envelope -->
+<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="welcome-tilt" id="welcomeTilt">
+    <div class="welcome-card">
+      <div class="welcome-emoji" aria-hidden="true">♥</div>
+      <span class="welcome-eyebrow">12 months ♡</span>
+      <h2 id="welcomeTitle">Happy Anniversary,<em>baby!</em></h2>
+      <p>here's a little something I made for you</p>
+      <div class="welcome-music"><span aria-hidden="true">🎧</span><div>Turn on your music (and your volume) once you proceed oki? </div></div>
+      <button class="welcome-btn" id="welcomeBtn">Open it 💌</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bouquet: shown after the welcome pop-up, before the envelope -->
+<div class="bouquet" id="bouquet" role="dialog" aria-modal="true" aria-labelledby="bouquetMsg" hidden>
+  <div class="bq-view" id="bqView" aria-label="A 3D bouquet of flowers for you. Drag to spin it.">
+    <div class="bq-fit" id="bqFit">
+      <div class="bq" id="bq"></div>
+    </div>
+  </div>
+  <p class="bq-hint" aria-hidden="true">drag it around ♡</p>
+  <p class="bq-msg" id="bouquetMsg">Happy 12 months, my love… here's your bouquet, as always ♡</p>
+  <button class="welcome-btn bq-btn" id="bouquetBtn">Now, your letter 💌</button>
+</div>
+
+<main class="stage">
+  <div class="headline">
+    <span class="badge">12 months with you ♡ </span>
+    <h1>Happy 12th Monthsary,<em id="her">Princess Baby</em></h1>
+  </div>
+
+  <div class="scene">
+    <span class="sparkle" aria-hidden="true">✨</span>
+    <span class="sparkle" aria-hidden="true">💖</span>
+    <span class="sparkle" aria-hidden="true">✨</span>
+    <div class="tilt" id="tilt">
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open your letter">
+        <div class="shadow"></div>
+        <div class="back"></div>
+        <div class="letter">To my favorite human ♡</div>
+        <div class="pocket">
+          <i class="l"></i><i class="r"></i><i class="b"></i>
+          <div class="to">for Marielle ♡</div>
+        </div>
+        <div class="flap">
+          <div class="face front"></div>
+          <div class="face back-face"></div>
+        </div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint">tap the envelope 💌</p>
+</main>
+
+<div class="overlay">
+  <article class="paper" id="paper" aria-label="Your letter">
+    <button class="close" id="close" aria-label="Close letter">✕</button>
+    <div class="paper-inner">
+      <div class="deco reveal" aria-hidden="true">🌸💌🌸</div>
+      <h2 class="reveal">To my pretty girl, my love,</h2>
+      <p class="date reveal">12 months of us</p>
+
+      <div class="message">
+        <p class="reveal"><strong>Happy 12th monthsary, baby!</strong> I honestly can't believe that it's already been a whole year since we officially started this relationship. Looking back at everything we've shared over these past 12 months, I can genuinely say that having you in my life has been one of the most amazing things that has ever happened to me. We've come so far, and I'm so grateful that I got to experience all of these things with you. Every month, every date, every little moment we've shared has become something I'll always look back on with so much love.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-01.jpeg" alt="Photo 1" onerror="this.remove()"><div class="ph"><span>📷</span>photo 1</div></div><figcaption>monthsary 1</figcaption></figure>
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-02.jpeg" alt="Photo 2" onerror="this.remove()"><div class="ph"><span>📷</span>photo 2</div></div><figcaption>monthsary 2</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">I know that this past year wasn't always easy. There were times when I kept putting up barriers between us, when I became avoidant, when I chose to distance myself instead of letting you in, and when I made things harder than they needed to be. I know there were moments when I could've loved you better and made you feel more assured of the relationship we have. <strong>I'm sorry for those times, baby.</strong> I don't want to carry those same habits into another year with you. I want this next chapter to be different. I want to be better at communicating, more present, more consistent, and someone you can always feel comfortable coming to. I want you to experience a version of me who doesn't make you question where you stand in my life.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo wide reveal"><div class="frame"><img src="images/anniv-03.jpeg" alt="Photo 3" onerror="this.remove()"><div class="ph"><span>📷</span>photo 3</div></div><figcaption>monthsary 3</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">But despite the difficult moments, I never want us to forget all the beautiful things we've experienced together. All our monthsaries, the dates we've gone on, the places we've visited, the food we've tried, the little adventures, and even the simplest moments when we were just spending time together. We've had so many new experiences, made so many memories, and discovered so many little things about each other. I love that we continue to have new stories to tell, new places to go, and new things to experience together. There's still so much I want to do with you, and I hope we never stop finding reasons to make more memories.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-04.jpeg" alt="Photo 4" onerror="this.remove()"><div class="ph"><span>📷</span>photo 4</div></div><figcaption>monthsary 4</figcaption></figure>
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-05.jpeg" alt="Photo 5" onerror="this.remove()"><div class="ph"><span>📷</span>photo 5</div></div><figcaption>monthsary 5</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">And one thing I've especially loved throughout our relationship is how we've become a little more comfortable being touchy with each other whenever we're out together. You know how much physical touch means to me, and being able to hold your hand, hug you, lean on you, and just be close to you makes me so happy. I genuinely love every second of it. Sometimes, even the smallest moments of being close to you are enough to make an ordinary date feel so special. I hope we get to have even more of those moments because I really do cherish them.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-06.jpeg" alt="Photo 6" onerror="this.remove()"><div class="ph"><span>📷</span>photo 6</div></div><figcaption>monthsary 6</figcaption></figure>
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-07.jpeg" alt="Photo 7" onerror="this.remove()"><div class="ph"><span>📷</span>photo 7</div></div><figcaption>monthsary 7</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">As we start another year together, I want you to know that I'm looking forward to everything that's still ahead of us. I know I can't promise that everything will always be perfect, but I can promise that I'll keep working on myself and on the way I love you. I want this year to be filled with more dates, more spontaneous plans, more laughter, more pictures, more little adventures, and most importantly, a healthier and happier relationship for the both of us. I want to make up for the moments when I wasn't able to show up the way you deserved, not just through words, but through the little things I do every day.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo wide reveal"><div class="frame"><img src="images/anniv-08.jpeg" alt="Photo 8" onerror="this.remove()"><div class="ph"><span>📷</span>photo 8</div></div><figcaption>monthsary 8</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">And baby, please know that when I think about my future, <strong>I still see you in it.</strong> I still see us growing together, reaching our own dreams, celebrating more anniversaries, visiting more places, and experiencing all the different stages of life side by side. I still want all those ordinary days with you, not just the special occasions. I want to keep choosing you, learning about you, and falling in love with all the little things that make you who you are. I hope that years from now, we'll get to look back at this letter and remember how our story started, how much we've grown, and how many more beautiful chapters we've written since then.</p>
+      </div>
+      <div class="photos">
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-09.jpeg" alt="Photo 9" onerror="this.remove()"><div class="ph"><span>📷</span>photo 9</div></div><figcaption>monthsary 9</figcaption></figure>
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-10.jpeg" alt="Photo 10" onerror="this.remove()"><div class="ph"><span>📷</span>photo 10</div></div><figcaption>monthsary 10</figcaption></figure>
+      </div>
+      <div class="message">
+        <p class="reveal">Thank you for making these past 12 months so special, for all the love you've given me, and for being someone I get to call mine. I love you so, so much, my pretty girl. Here's to our first official year, to a better year ahead, and to all the years that I still hope to spend with you.</p>
+
+        <div class="quote q3 reveal">
+          <strong>Happy anniversary, my love. I choose you, today and in all the days to come.</strong>
+        </div>
+
+        <p class="sign reveal">Forever yours,<br>Your bub. ❤️</p>
+      </div>
+      <div class="photos">
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-11.jpeg" alt="Photo 11" onerror="this.remove()"><div class="ph"><span>📷</span>photo 11</div></div><figcaption>monthsary 11</figcaption></figure>
+        <figure class="photo reveal"><div class="frame"><img src="images/anniv-12.jpeg" alt="Photo 12" onerror="this.remove()"><div class="ph"><span>📷</span>photo 12</div></div><figcaption>our anniversary 🎉</figcaption></figure>
+      </div>
+
+      <div class="teaser reveal">
+        <span class="bell" aria-hidden="true">💌</span>
+        <h3>Happy 1st Anniversary!</h3>
+        <p>Twelve months down, and I'd choose you all over again. 💖</p>
+        <div class="when">📅 November 12</div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script>
+  /* ===== EDIT THESE ===== */
+  const CONFIG = {
+    herName: "Princess Baby"                       // shown in the headline
+  };
+  /* ====================== */
+
+  document.getElementById("her").textContent = CONFIG.herName;
+
+  /* ===== SOUND (sound effects are generated in the browser, no files needed) ===== */
+  const bgm = document.getElementById("bgm");
+  const soundBtn = document.getElementById("sound");
+  const MUSIC_VOLUME = 0.35;                  // 0 to 1
+  let muted = false;
+  try { muted = localStorage.getItem("muted") === "1"; } catch (e) {}
+
+  let ctx = null;
+  function audio() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+    }
+    // iPhone/iPad: let Web Audio play even when the silent switch is on
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+    if (ctx.state === "suspended") ctx.resume();
+    return ctx;
+  }
+  function tone(freq, when, dur, vol = 0.12, type = "sine", slideTo) {
+    const c = audio(); if (!c || muted) return;
+    const t = c.currentTime + when;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, t);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(c.destination);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  function noise(when, dur, vol, f0, f1, type = "bandpass") {
+    const c = audio(); if (!c || muted) return;
+    const t = c.currentTime + when;
+    const buf = c.createBuffer(1, Math.max(1, Math.floor(c.sampleRate * dur)), c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = c.createBufferSource(); src.buffer = buf;
+    const f = c.createBiquadFilter(); f.type = type;
+    f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(f).connect(g).connect(c.destination);
+    src.start(t); src.stop(t + dur + 0.05);
+  }
+  const sfx = {
+    tap()    { tone(520, 0, 0.12, 0.14, "sine", 330); },                         // envelope tap
+    flap()   { noise(0, 0.35, 0.22, 2200, 700); tone(300, 0, 0.1, 0.06, "triangle", 200); },  // flap opens
+    whoosh() { noise(0, 0.7, 0.2, 500, 3200, "lowpass"); },                     // letter slides up
+    chime()  { [784, 988, 1175, 1568].forEach((f, i) => tone(f, i * 0.09, 0.9, 0.09, "sine")); }, // letter ready
+    pop()    { tone(700 + Math.random() * 500, 0, 0.1, 0.07, "sine", 1300); },  // photos/quotes appear
+    close()  { tone(659, 0, 0.18, 0.1); tone(494, 0.12, 0.3, 0.1); noise(0.05, 0.3, 0.12, 1500, 500); }
+  };
+  let lastPop = 0;
+  function popThrottled() { const n = Date.now(); if (n - lastPop > 450) { lastPop = n; sfx.pop(); } }
+
+  // background music: starts on the first tap (browsers block autoplay), fades in
+  bgm.volume = 0;
+  let fadeTimer = null;
+  function fadeTo(target, ms = 1500) {
+    clearInterval(fadeTimer);
+    const start = bgm.volume, steps = 30, dt = ms / steps; let i = 0;
+    fadeTimer = setInterval(() => {
+      i++; bgm.volume = Math.max(0, Math.min(1, start + (target - start) * (i / steps)));
+      if (i >= steps) clearInterval(fadeTimer);
+    }, dt);
+  }
+  function startMusic() {
+    if (muted) return;
+    const p = bgm.play();
+    if (p && p.then) p.then(() => fadeTo(MUSIC_VOLUME)).catch(() => {});
+  }
+  function renderSoundBtn() {
+    soundBtn.textContent = muted ? "🔇" : "🔊";
+    soundBtn.setAttribute("aria-label", muted ? "Turn sound on" : "Turn sound off");
+  }
+  soundBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    muted = !muted;
+    try { localStorage.setItem("muted", muted ? "1" : "0"); } catch (err) {}
+    renderSoundBtn();
+    if (muted) { fadeTo(0, 400); setTimeout(() => bgm.pause(), 450); }
+    else { audio(); startMusic(); sfx.tap(); }
+  });
+  renderSoundBtn();
+  // first tap: wake up the audio system (a silent clip helps iPhones), then start the music
+  const SILENT = "data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==";
+  function unlockAudio() {
+    audio();
+    try { const s = new Audio(SILENT); s.play().catch(() => {}); } catch (e) {}
+    startMusic();
+  }
+  addEventListener("pointerdown", unlockAudio, { once: true });
+  addEventListener("keydown", unlockAudio, { once: true });
+
+  // welcome pop-up: shows first, the envelope waits behind it until she taps "Open it"
+  const welcome = document.getElementById("welcome");
+  const welcomeBtn = document.getElementById("welcomeBtn");
+  const stageEl = document.querySelector(".stage");
+  stageEl.inert = true;
+  welcomeBtn.focus({ preventScroll: true });
+  const welcomeTilt = document.getElementById("welcomeTilt");
+  welcome.addEventListener("pointermove", e => {
+    const x = (e.clientX / innerWidth - .5) * 2, y = (e.clientY / innerHeight - .5) * 2;
+    welcomeTilt.style.transform = `rotateY(${x * 12}deg) rotateX(${-y * 9}deg)`;
+  });
+  welcomeBtn.addEventListener("click", () => {
+    sfx.chime();
+    body.classList.add("welcomed");
+    showBouquet();                                // bouquet is already there as the pop-up fades
+    setTimeout(() => { welcome.hidden = true; }, 700);
+  });
+
+  /* ===== 3D BOUQUET (pure CSS 3D, built here) ===== */
+  const bouquetEl = document.getElementById("bouquet");
+  const bq = document.getElementById("bq");
+  const bqView = document.getElementById("bqView");
+  const bqFit = document.getElementById("bqFit");
+  const bqMsg = document.getElementById("bouquetMsg");
+  const bouquetBtn = document.getElementById("bouquetBtn");
+  const el = (cls, css) => { const d = document.createElement("div"); d.className = cls; Object.assign(d.style, css || {}); return d; };
+
+  function buildBouquet() {
+    const RIM = 104, TIP = 8, H = 160;           // cone: rim radius, tip radius, height (px)
+    const slant = Math.atan((RIM - TIP) / H), L = Math.hypot(H, RIM - TIP);
+    // wrapping paper: pleated panels around a cone, pointed tops, two alternating colours
+    const N = 11, step = 360 / N;
+    for (let i = 0; i < N; i++) {
+      const w = 2 * (RIM + 6) * Math.tan(Math.PI / N) + 10, extra = 16 + (i % 3) * 9, h = L + extra;
+      const tipW = (2 * TIP * Math.tan(Math.PI / N)) / w * 50;
+      const p = el("bq-paper", {
+        width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h / 2 + "px",
+        clipPath: `polygon(0 ${extra / h * 100 * .55}%, 50% 0, 100% ${extra / h * 100 * .55}%, ${50 + tipW}% 100%, ${50 - tipW}% 100%)`,
+        background: "linear-gradient(180deg,transparent 35%,rgba(150,30,70,.22) 80%,rgba(120,20,55,.42)), " + (i % 2
+          ? "linear-gradient(90deg,#ffd6e3,#fff2f6 45%,#ffd0de)"
+          : "linear-gradient(90deg,#f58fb0,#ffb3c9 50%,#f283a8)"),
+        transform: `translate3d(0,${H / 2 - extra / 2}px,0) rotateY(${i * step}deg) translateZ(${(RIM + TIP) / 2 + 3}px) rotateX(${-slant}rad)`
+      });
+      bq.appendChild(p);
+    }
+    bq.appendChild(el("bq-fill", { width: RIM * 2 + "px", height: RIM * 2 + "px", left: -RIM + "px", top: -RIM + "px", transform: "translate3d(0,6px,0) rotateX(90deg)" }));
+    // greenery dome: a closed mound from the rim up under the flowers, so nothing shows through the gaps
+    const DB = RIM - 4, DT = 34, DH = 80, DM = 14;   // dome base radius, top radius, height, panels
+    const dSlant = Math.atan((DB - DT) / DH), DL = Math.hypot(DH, DB - DT);
+    const dWb = 2 * DB * Math.tan(Math.PI / DM) + 4, dWt = 2 * DT * Math.tan(Math.PI / DM) + 4;
+    for (let i = 0; i < DM; i++) {
+      bq.appendChild(el("bq-dome", { width: dWb + "px", height: DL + "px", left: -dWb / 2 + "px", top: -DL / 2 + "px",
+        clipPath: `polygon(${50 - dWt / dWb * 50}% 0, ${50 + dWt / dWb * 50}% 0, 100% 100%, 0 100%)`,
+        transform: `translate3d(0,${-DH / 2 + 4}px,0) rotateY(${i * 360 / DM}deg) translateZ(${(DB + DT) / 2}px) rotateX(${dSlant}rad)` }));
+    }
+    bq.appendChild(el("bq-fill", { width: DT * 2 + 6 + "px", height: DT * 2 + 6 + "px", left: -DT - 3 + "px", top: -DT - 3 + "px", transform: `translate3d(0,${-DH + 4}px,0) rotateX(90deg)` }));
+
+    // leaves poking out of the paper
+    for (let i = 0; i < 9; i++) {
+      const lf = el("bq-leaf", { width: "26px", height: "62px", left: "-13px", top: "-62px",
+        transform: `rotateY(${i * 40 + 12}deg) translateZ(${RIM - 18}px) translateY(-14px) rotateX(${-58 - (i % 2) * 10}deg)` });
+      bq.appendChild(lf);
+    }
+
+    // flowers: [type, colour, ring radius, angle, height, outward tilt, size]
+    const PINK = ["#e8456f", "#ff7aa2", "#ffb3c9", "#d92e5c", "#ff94b4"];
+    const LIFT = -34;                            // raise every flower above the wrap
+    const flowers = [["rose", "#e8456f", 0, 0, LIFT - 62, 0, 1.3]];
+    for (let i = 0; i < 6; i++) flowers.push([i % 3 === 1 ? "daisy" : "rose", PINK[(i + 1) % 5], 46, i * 60 + 30, LIFT - 40 - (i % 2) * 8, 28, 1.0]);
+    for (let i = 0; i < 8; i++) flowers.push([i % 2 ? "daisy" : "rose", PINK[(i + 3) % 5], 84, i * 45, LIFT - 8 - (i % 2) * 10, 52, i % 2 ? 1.0 : .9]);
+
+    flowers.forEach(([type, col, rad, az, y, tilt, s], n) => {
+      const head = el("bq-head", { animationDelay: (0.35 + n * 0.11) + "s",
+        transform: `translate3d(0,${y}px,0) rotateY(${az}deg) translateZ(${rad}px) rotateX(${-tilt}deg) scale(calc(${s} * var(--bloom)))` });
+      if (type === "rose") {
+        // rings of petals from the tight centre to the open outside
+        const rings = [[3, 3, 14, 18, 8], [5, 7, 20, 24, 24], [5, 11, 26, 30, 44], [6, 15, 32, 34, 66]];
+        rings.forEach(([count, r, w, h, open], k) => {
+          for (let j = 0; j < count; j++) {
+            const pt = el("petal", { width: w + "px", height: h + "px", left: -w / 2 + "px", top: -h + "px",
+              borderRadius: "50% 50% 46% 46% / 62% 62% 38% 38%",
+              background: `radial-gradient(ellipse at 50% 20%, ${shade(col, 18 - k * 4)}, ${col} 55%, ${shade(col, -28)})`,
+              transform: `rotateY(${j * 360 / count + k * 31}deg) translateZ(${r}px) rotateX(calc(${-open}deg * var(--bloom)))` });
+            head.appendChild(pt);
+          }
+        });
+        head.appendChild(el("bq-disc", { width: "14px", height: "14px", left: "-7px", top: "-7px",
+          background: `radial-gradient(${shade(col, -35)}, ${col})`, transform: "translateY(-6px) rotateX(90deg)" }));
+      } else {
+        for (let j = 0; j < 13; j++) {
+          head.appendChild(el("petal", { width: "10px", height: "32px", left: "-5px", top: "-32px",
+            borderRadius: "50% 50% 40% 40% / 70% 70% 30% 30%",
+            background: "linear-gradient(#fff, #fff6f9 70%, #ffd9e5)",
+            transform: `rotateY(${j * 360 / 13}deg) translateZ(6px) rotateX(calc(-80deg * var(--bloom)))` }));
+        }
+        head.appendChild(el("bq-disc", { width: "18px", height: "18px", left: "-9px", top: "-9px",
+          background: "radial-gradient(circle at 40% 35%, #ffe680, #f5b800 70%, #d99a00)", transform: "translateY(-2px) rotateX(90deg)" }));
+      }
+      bq.appendChild(head);
+    });
+
+    // baby's breath: tiny white blooms (two crossed discs so they never go flat)
+    for (let i = 0; i < 34; i++) {
+      const a = Math.random() * 360, r = 30 + Math.random() * 78, y = -62 - Math.random() * 40 + r * .35;
+      const g = el("bq-head", { animationDelay: (1.6 + Math.random()) + "s",
+        transform: `translate3d(0,${y}px,0) rotateY(${a}deg) translateZ(${r}px) scale(var(--bloom))` });
+      g.appendChild(el("bq-dot")); g.appendChild(el("bq-dot", { transform: "rotateY(90deg)" }));
+      bq.appendChild(g);
+    }
+
+    // satin bow on the front of the wrap
+    const yb = H * .68, rb = RIM - (RIM - TIP) * yb / H;
+    const BN = 16;                                 // satin band wrapped all the way round
+    for (let i = 0; i < BN; i++) {
+      const bw = 2 * (rb + 1) * Math.tan(Math.PI / BN) + 2;
+      bq.appendChild(el("bq-band", { width: bw + "px", height: "14px", left: -bw / 2 + "px", top: "-7px",
+        transform: `translate3d(0,${yb}px,0) rotateY(${i * 360 / BN}deg) translateZ(${rb + 1}px) rotateX(${-slant}rad)` }));
+    }
+    const bow = el("bq-bow", { transform: `translate3d(0,${yb}px,0) translateZ(${rb + 3}px) rotateX(${-slant * .6}rad)` });
+    const bowSvg = `<svg viewBox="0 0 110 80" width="110" height="80" aria-hidden="true">
+      <defs><linearGradient id="rib" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset="1" stop-color="#c2395f"/></linearGradient></defs>
+      <path d="M50 34 C30 8 6 10 8 28 C10 44 34 44 50 38Z" fill="url(#rib)"/>
+      <path d="M60 34 C80 8 104 10 102 28 C100 44 76 44 60 38Z" fill="url(#rib)"/>
+      <path d="M50 40 L34 76 L44 72 L48 78 L54 42Z M60 40 L76 76 L66 72 L62 78 L56 42Z" fill="#d94673"/>
+      <rect x="47" y="28" width="16" height="16" rx="6" fill="#e8456f"/>
+      <path d="M18 24 C24 18 34 20 42 30" stroke="#ffb3c9" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M92 24 C86 18 76 20 68 30" stroke="#ffb3c9" stroke-width="3" fill="none" stroke-linecap="round" opacity=".45"/>
+    </svg>`;
+    for (let k = 0; k < 7; k++) {                  // stacked layers give the bow real thickness
+      const layer = el("bq-bow-layer", { transform: `translateZ(${k * 1.4}px)`, filter: k < 6 ? `brightness(${.62 + k * .05})` : "none" });
+      layer.innerHTML = bowSvg; bow.appendChild(layer);
+    }
+    bq.appendChild(bow);
+    // stems poking out of the bottom of the wrap
+    [[-7, -6, 0], [5, 4, 30], [0, 0, 60], [-3, 9, 100], [8, -3, 140]].forEach(([x, z, a], i) => {
+      const st = el("bq-stem", { transform: `translate3d(${x}px,${H - 8}px,${z}px) rotateZ(${(i - 2) * 4}deg) rotateY(${a}deg)` });
+      st.appendChild(el("bq-stem-face")); st.appendChild(el("bq-stem-face", { transform: "rotateY(90deg)" }));
+      bq.appendChild(st);
+    });
+    bqView.appendChild(el("bq-shadow"));
+  }
+  function shade(hex, pct) {                      // lighten (+) or darken (−) a hex colour
+    const n = parseInt(hex.slice(1), 16), f = pct / 100;
+    const ch = s => { const c = (n >> s) & 255; return Math.round(f > 0 ? c + (255 - c) * f : c * (1 + f)); };
+    return `rgb(${ch(16)},${ch(8)},${ch(0)})`;
+  }
+
+  // spin: gentle sway on its own, drag to turn it around
+  let spin = 0, tiltX = -22, dragging = false, lastX = 0, lastY = 0, vel = 0, t0 = 0, bqRaf = 0;
+  const TILT_MIN = -72, TILT_MAX = -6;           // from looking down on the flowers to eye level
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function bqFrame(t) {
+    if (!t0) t0 = t;
+    if (!dragging) { spin += vel; vel *= 0.94; }
+    const sway = reduceMotion ? 0 : Math.sin((t - t0) / 1400) * 16;
+    bq.style.transform = `rotateX(${tiltX}deg) rotateY(${spin + sway}deg)`;
+    bqRaf = requestAnimationFrame(bqFrame);
+  }
+  bqView.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; lastY = e.clientY; vel = 0; bqView.setPointerCapture(e.pointerId); });
+  bqView.addEventListener("pointermove", e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+    spin += dx * .6; vel = dx * .6;
+    tiltX = Math.max(TILT_MIN, Math.min(TILT_MAX, tiltX - dy * .4));   // drag down = look from above
+  });
+  const endDrag = () => { dragging = false; };
+  bqView.addEventListener("pointerup", endDrag);
+  bqView.addEventListener("pointercancel", endDrag);
+
+  function fitBouquet() {                         // shrink the bouquet on short / narrow screens
+    const k = Math.min(1, (innerWidth - 24) / 340, (innerHeight * .56) / 400);
+    bqFit.style.transform = `scale(${k})`;
+    bqView.style.width = 340 * k + "px"; bqView.style.height = 400 * k + "px";
+    bqFit.style.width = "340px"; bqFit.style.height = "400px";
+  }
+  addEventListener("resize", fitBouquet);
+
+  // message appears word by word
+  bqMsg.innerHTML = bqMsg.textContent.split(" ").map(w => `<span class="w">${w}</span>`).join(" ");
+
+  function showBouquet() {
+    buildBouquet(); fitBouquet();
+    bouquetEl.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => body.classList.add("bouquet-on")));
+    bqRaf = requestAnimationFrame(bqFrame);
+    [0, 1, 2, 3, 4].forEach(i => setTimeout(() => sfx.pop(), 500 + i * 260));
+    const words = bqMsg.querySelectorAll(".w");
+    words.forEach((w, i) => setTimeout(() => w.classList.add("in"), 2200 + i * 110));
+    setTimeout(() => { bouquetBtn.classList.add("in"); bouquetBtn.focus({ preventScroll: true }); }, 2400 + words.length * 110 + 300);
+  }
+  bouquetBtn.addEventListener("click", () => {
+    sfx.chime();
+    body.classList.add("bouquet-done");
+    stageEl.inert = false;
+    setTimeout(() => { bouquetEl.hidden = true; cancelAnimationFrame(bqRaf); }, 850);
+  });
+
+  // floating hearts & sparkles
+  const floaters = document.getElementById("floaters");
+  const icons = ["♥","💗","✨","🌸","💖","♡"];
+  for (let i = 0; i < 20; i++) {
+    const s = document.createElement("span");
+    s.textContent = icons[i % icons.length];
+    s.style.left = Math.random() * 100 + "%";
+    s.style.fontSize = 12 + Math.random() * 20 + "px";
+    s.style.color = "#ff8fb1";
+    s.style.animationDuration = 9 + Math.random() * 10 + "s";
+    s.style.animationDelay = Math.random() * 12 + "s";
+    floaters.appendChild(s);
+  }
+
+  // 3D tilt following pointer
+  const tilt = document.getElementById("tilt");
+  const body = document.body;
+  addEventListener("pointermove", e => {
+    if (body.classList.contains("open")) return;
+    const x = (e.clientX / innerWidth - .5) * 2;
+    const y = (e.clientY / innerHeight - .5) * 2;
+    tilt.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`;
+  });
+
+  // open sequence
+  const envelope = document.getElementById("envelope");
+  const paper = document.getElementById("paper");
+  let timers = [];
+  function openLetter() {
+    if (body.classList.contains("open")) return;
+    tilt.style.transform = "rotateX(6deg)";
+    sfx.tap(); setTimeout(() => sfx.flap(), 120);
+    body.classList.add("open");                                            // flap opens
+    timers.push(setTimeout(() => { body.classList.add("rise"); sfx.whoosh(); }, 750));  // paper slides up out of the envelope
+    timers.push(setTimeout(() => {
+      body.classList.add("reading");                                       // paper glides up full screen
+      sfx.chime();
+      observeReveals();
+    }, 1900));
+  }
+  function closeLetter() {
+    if (!body.classList.contains("open")) return;
+    sfx.close();
+    timers.forEach(clearTimeout); timers = [];
+    body.classList.remove("reading");
+    timers.push(setTimeout(() => body.classList.remove("rise"), 500));
+    timers.push(setTimeout(() => body.classList.remove("open"), 1100));
+    paper.scrollTo({ top: 0 });
+    document.querySelectorAll(".reveal").forEach(el => el.classList.remove("in"));
+  }
+  envelope.addEventListener("click", openLetter);
+  envelope.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLetter(); }
+  });
+  document.getElementById("close").addEventListener("click", closeLetter);
+  addEventListener("keydown", e => { if (e.key === "Escape") closeLetter(); });
+
+  // reveal on scroll inside the paper
+  function observeReveals() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add("in"); io.unobserve(en.target);
+          if (en.target.matches(".photo, .quote, .teaser, .promises")) popThrottled();
+        }
+      });
+    }, { root: paper, threshold: .12 });
+    document.querySelectorAll(".reveal").forEach((el, i) => {
+      el.style.transitionDelay = (i < 3 ? i * 0.25 + 0.9 : 0) + "s";
+      io.observe(el);
+    });
+  }
+</script>
+</body>
+</html>
