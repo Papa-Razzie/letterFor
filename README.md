@@ -2,14 +2,14 @@
 
 Hi, my love. 🥰
 
-I made something for our 11th monthsary. It's a little preview of something bigger, so follow the steps below.
+I made something for our 12th monthsary / our 1st anniversary. It's a little preview of something bigger, so follow the steps below.
 
 ## How to open it
 
 1. **Visit the website:** 👉 [github link](https://papa-razzie.github.io/letterFor/)
 3. **Tap the envelope** and watch it open. ✨
 4. **Read the whole letter**, all the way down to the bottom. Take your time. Scroll through the photos, too. 📸
-5. **Come back on November 12.** That's our anniversary, and something special will be waiting for you. 🎀
+5. **Happy anniversary!** 🎀
 
 ## Tips
 
@@ -19,9 +19,9 @@ I made something for our 11th monthsary. It's a little preview of something bigg
 
 ## A little note
 
-This is only the preview. The best part is still coming. 💖
+Twelve months down, so many more to go. 💖
 
-Happy 11th monthsary, my Princess Baby.
+Happy 12th monthsary / our 1st anniversary, my Princess Baby.
 
 Forever yours,
 Razzle ♡

@@ -136,6 +136,7 @@ body.reading .paper{transform:translateY(0)}
 .photo:nth-child(1){--r:-2.5deg}.photo:nth-child(2){--r:2deg}
 .photo:nth-child(3){--r:-1deg}.photo:nth-child(4){--r:2deg}.photo:nth-child(5){--r:-2deg}
 .photo.wide{grid-column:1/-1}
+.photo:nth-child(1).wide{--r:-1.2deg}
 .photo .ph,.photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:#ffe8f0}
 .photo.wide .ph,.photo.wide img{aspect-ratio:16/10}
 .ph{display:grid;place-items:center;color:var(--pink-d);font-family:'Caveat',cursive;font-size:1.4rem;border:2px dashed var(--pink-l)}
@@ -278,3 +279,11 @@ body:not(.bouquet-done) .stage{visibility:hidden}
 .bq-stem{position:absolute;width:0;height:0}
 .bq-stem-face{position:absolute;width:6px;height:46px;left:-3px;top:0;border-radius:3px;backface-visibility:visible;
   background:linear-gradient(90deg,#2f6e3f,#5aa86a 45%,#2f6e3f)}
+
+/* photo frames: drop images/anniv-01.jpeg ... anniv-12.jpeg in and they replace the placeholders */
+.photo .frame{position:relative;aspect-ratio:4/5;border-radius:3px;overflow:hidden;background:#ffe8f0}
+.photo.wide .frame{aspect-ratio:16/10}
+.photo .frame img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;z-index:1;border-radius:0}
+.photo .frame .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;aspect-ratio:auto;border:2px dashed var(--pink-l)}
+.photo .frame .ph span{font-size:2rem}
+.message+.photos{margin-top:.4rem}
